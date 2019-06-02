@@ -16,8 +16,6 @@ import android.view.View;
 import java.util.ArrayList;
 
 public class ActMain extends AppCompatActivity {
-    public static final String NOTE = "Note";
-    public static final int CREATE_NOTE = 1;
     private Toolbar toolbar;
     private Intent intent;
     private ArrayList<Note> noteList;
@@ -46,8 +44,7 @@ public class ActMain extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent = new Intent(ActMain.this, ActCreateTodo.class);
-                startActivityForResult(intent, CREATE_NOTE);
+                ActHandleTodo.createTodo(ActMain.this);
             }
         });
     }
@@ -62,8 +59,7 @@ public class ActMain extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_about:
-                intent = new Intent(this, ActAbout.class);
-                startActivity(intent);
+                ActAbout.showAbout(this);
                 return true;
 
             default:
@@ -84,7 +80,7 @@ public class ActMain extends AppCompatActivity {
             @Override
             public void onItemClick(final int position) {
                 intent = new Intent(ActMain.this, ActReadTodo.class);
-                intent.putExtra(NOTE, noteList.get(position));
+                intent.putExtra(ActHandleTodo.NOTE, noteList.get(position));
                 startActivity(intent);
             }
         });
@@ -92,10 +88,22 @@ public class ActMain extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == CREATE_NOTE && resultCode == Activity.RESULT_OK) {
-            Note note = data.getParcelableExtra(NOTE);
-            if (note != null) {
-                noteList.add(note);
+        if (resultCode == Activity.RESULT_OK) {
+            Bundle bundle = data.getExtras();
+
+            if (bundle != null) {
+                Note note = bundle.getParcelable(ActHandleTodo.NOTE);
+
+                if (note != null) {
+                    if (requestCode == ActHandleTodo.CREATE) {
+                        noteList.add(note);
+
+                    } else if (requestCode == ActHandleTodo.ALTER) {
+                        int position = bundle.getInt(ActHandleTodo.POSITION);
+                        noteList.get(position).setName(note.getName());
+                        noteList.get(position).setContent(note.getContent());
+                    }
+                }
             }
         }
     }

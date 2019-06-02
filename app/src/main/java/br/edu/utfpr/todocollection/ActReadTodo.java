@@ -24,7 +24,7 @@ public class ActReadTodo extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         intent = getIntent();
-        Note note = intent.getParcelableExtra(ActMain.NOTE);
+        Note note = intent.getParcelableExtra(ActHandleTodo.NOTE);
 
         txtReadNameCatch = findViewById(R.id.txtReadNameCatch);
         txtReadNameCatch.setText(note.getName());
