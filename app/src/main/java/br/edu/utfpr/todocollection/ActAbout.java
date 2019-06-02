@@ -24,7 +24,7 @@ public class ActAbout extends AppCompatActivity {
 
     public void composeEmail(View view) {
         Intent intent = new Intent(Intent.ACTION_SENDTO);
-        intent.setData(Uri.parse(getString(R.string.mailto))); // only email apps should handle this
+        intent.setData(Uri.parse(getString(R.string.emailto))); // only email apps should handle this
         intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_subject));
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
