@@ -24,4 +24,6 @@
     <string name="lbl_built_in">in Android Studio 3.3.2 by</string>
     <string name="lbl_author">Luiz Alberto Teodoro de Arruda</string>
     <string name="lbl_email"><![CDATA[<luizarruda@alunos.utfpr.edu.br>]]></string>
+    <string name="email_subject">I came from your To-Do Collection app!</string>
+    <string name="mailto">mailto:luizarruda@alunos.utfpr.edu.br</string>
 </resources>
