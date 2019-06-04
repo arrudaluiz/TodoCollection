@@ -44,9 +44,8 @@ public class ActHandleTodo extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ab = getSupportActionBar();
-        if (ab != null) {
+        if (ab != null)
             ab.setDisplayHomeAsUpEnabled(true);
-        }
 
         edtTodoName = findViewById(R.id.edtTodoName);
         edtTodoContent = findViewById(R.id.edtTodoContent);
@@ -63,7 +62,7 @@ public class ActHandleTodo extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_save:
                 if (validateFields()) {
-                    sendTodo();
+                    sendNewTodo();
                     finish();
                 }
                 return true;
@@ -111,10 +110,19 @@ public class ActHandleTodo extends AppCompatActivity {
         return true;
     }
 
-    public void sendTodo() {
+    public void sendNewTodo() {
         Todo todo = new Todo(edtTodoName.getText().toString(), edtTodoContent.getText().toString());
         Intent intent = new Intent();
         intent.putExtra(TODO, todo);
         setResult(Activity.RESULT_OK, intent);
+    }
+
+    public void sendChangedTodo() {
+        
+    }
+
+    public void cancel() {
+        setResult(Activity.RESULT_CANCELED);
+        finish();
     }
 }
