@@ -7,7 +7,7 @@
     android:background="@color/utfpr_grey"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="br.edu.utfpr.todocollection.ActHandleTodo"
-    tools:showIn="@layout/act_read_todo">
+    tools:showIn="@layout/act_handle_todo">
 
     <TextView
         android:id="@+id/txtTodoName"

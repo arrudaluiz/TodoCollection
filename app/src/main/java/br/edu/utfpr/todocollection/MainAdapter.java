@@ -12,36 +12,36 @@ import java.util.ArrayList;
 
 class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     private ArrayList<Todo> todoList;
-    private OnItemClickListener listener;
+//    private OnItemClickListener listener;
 
     // Constructor
     public MainAdapter(ArrayList<Todo> todoList) {
         this.todoList = todoList;
     }
 
-    public interface OnItemClickListener {
+    /*public interface OnItemClickListener {
         void onItemClick(int position);
-    }
+    }*/
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    /*public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
-    }
+    }*/
 
     @NonNull
     @Override
-    public MainAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.main_adapter, viewGroup, false);
-        return new ViewHolder(view, listener);
+        return new ViewHolder(view/*, listener*/);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MainAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         viewHolder.txtTodoName.setText(todoList.get(i).getName());
         viewHolder.bttDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                todoList.remove(viewHolder.getAdapterPosition());
-                notifyItemRemoved(viewHolder.getAdapterPosition());
+                todoList.remove(i);
+                notifyItemRemoved(i);
             }
         });
     }
@@ -55,12 +55,12 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         public TextView txtTodoName;
         public ImageButton bttDelete;
 
-        public ViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
+        public ViewHolder(@NonNull View itemView/*, final OnItemClickListener listener*/) {
             super(itemView);
             txtTodoName = itemView.findViewById(R.id.txtTodoName);
             bttDelete = itemView.findViewById(R.id.bttDelete);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            /*itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (listener != null) {
@@ -70,7 +70,7 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                         }
                     }
                 }
-            });
+            });*/
         }
     }
 }

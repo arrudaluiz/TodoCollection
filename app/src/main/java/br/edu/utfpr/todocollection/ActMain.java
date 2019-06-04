@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -76,12 +77,33 @@ public class ActMain extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new MainAdapter.OnItemClickListener() {
+        /*adapter.setOnItemClickListener(new MainAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(final int position) {
                 ActReadTodo.readTodo(ActMain.this, todoList.get(position));
             }
-        });
+        });*/
+
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getApplicationContext(),
+                        recyclerView,
+                        new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                Toast.makeText(getApplicationContext(),
+                                        todoList.get(position).getName(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onItemLongClick(View view, int position) {
+                                Toast.makeText(getApplicationContext(),
+                                        todoList.get(position).getContent(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                )
+        );
     }
 
     @Override
