@@ -11,12 +11,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
-    private ArrayList<Note> noteList;
+    private ArrayList<Todo> todoList;
     private OnItemClickListener listener;
 
     // Constructor
-    public MainAdapter(ArrayList<Note> noteList) {
-        this.noteList = noteList;
+    public MainAdapter(ArrayList<Todo> todoList) {
+        this.todoList = todoList;
     }
 
     public interface OnItemClickListener {
@@ -31,17 +31,16 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     @Override
     public MainAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.main_adapter, viewGroup, false);
-        ViewHolder viewHolder = new ViewHolder(view, listener);
-        return viewHolder;
+        return new ViewHolder(view, listener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final MainAdapter.ViewHolder viewHolder, int i) {
-        viewHolder.txtTodoName.setText(noteList.get(i).getName());
+        viewHolder.txtTodoName.setText(todoList.get(i).getName());
         viewHolder.bttDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                noteList.remove(viewHolder.getAdapterPosition());
+                todoList.remove(viewHolder.getAdapterPosition());
                 notifyItemRemoved(viewHolder.getAdapterPosition());
             }
         });
@@ -49,7 +48,7 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return noteList.size();
+        return todoList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

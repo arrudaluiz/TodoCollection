@@ -18,17 +18,17 @@ import java.util.ArrayList;
 public class ActMain extends AppCompatActivity {
     private Toolbar toolbar;
     private Intent intent;
-    private ArrayList<Note> noteList;
+    private ArrayList<Todo> todoList;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private MainAdapter adapter;
     private FloatingActionButton fab;
 
     public ActMain() {
-        noteList = new ArrayList<>();
-        noteList.add(new Note("Provas", "Matemática\nPortuguês\nInglês"));
-        noteList.add(new Note("Mercado", "Arroz\nFeijão\nQueijo"));
-        noteList.add(new Note("Lembrete", "Fazer cópia das chaves de casa"));
+        todoList = new ArrayList<>();
+        todoList.add(new Todo("Provas", "Matemática\nPortuguês\nInglês"));
+        todoList.add(new Todo("Mercado", "Arroz\nFeijão\nQueijo"));
+        todoList.add(new Todo("Lembrete", "Fazer cópia das chaves de casa"));
     }
 
     @Override
@@ -71,7 +71,7 @@ public class ActMain extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
-        adapter = new MainAdapter(noteList);
+        adapter = new MainAdapter(todoList);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -79,9 +79,7 @@ public class ActMain extends AppCompatActivity {
         adapter.setOnItemClickListener(new MainAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(final int position) {
-                intent = new Intent(ActMain.this, ActReadTodo.class);
-                intent.putExtra(ActHandleTodo.NOTE, noteList.get(position));
-                startActivity(intent);
+                ActReadTodo.readTodo(ActMain.this, todoList.get(position));
             }
         });
     }
@@ -89,19 +87,22 @@ public class ActMain extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (resultCode == Activity.RESULT_OK) {
-            Bundle bundle = data.getExtras();
+            Bundle bundle = null;
+            if (data != null) {
+                bundle = data.getExtras();
+            }
 
             if (bundle != null) {
-                Note note = bundle.getParcelable(ActHandleTodo.NOTE);
+                Todo todo = bundle.getParcelable(ActHandleTodo.TODO);
 
-                if (note != null) {
+                if (todo != null) {
                     if (requestCode == ActHandleTodo.CREATE) {
-                        noteList.add(note);
+                        todoList.add(todo);
 
                     } else if (requestCode == ActHandleTodo.ALTER) {
                         int position = bundle.getInt(ActHandleTodo.POSITION);
-                        noteList.get(position).setName(note.getName());
-                        noteList.get(position).setContent(note.getContent());
+                        todoList.get(position).setName(todo.getName());
+                        todoList.get(position).setContent(todo.getContent());
                     }
                 }
             }

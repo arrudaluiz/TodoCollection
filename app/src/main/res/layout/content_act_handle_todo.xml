@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     android:background="@color/utfpr_grey"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="br.edu.utfpr.todocollection.ActReadTodo"
+    tools:context="br.edu.utfpr.todocollection.ActHandleTodo"
     tools:showIn="@layout/act_read_todo">
 
     <TextView
-        android:id="@+id/txtReadName"
+        android:id="@+id/txtTodoName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -22,41 +22,44 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtReadNameCatch"
+    <EditText
+        android:id="@+id/edtTodoName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@android:color/background_light"
-        android:textColor="@android:color/black"
+        android:ems="10"
+        android:inputType="textPersonName"
         android:textSize="28sp"
-        app:layout_constraintEnd_toEndOf="@+id/txtReadName"
-        app:layout_constraintStart_toStartOf="@+id/txtReadName"
-        app:layout_constraintTop_toBottomOf="@+id/txtReadName" />
+        app:layout_constraintEnd_toEndOf="@+id/txtTodoName"
+        app:layout_constraintStart_toStartOf="@+id/txtTodoName"
+        app:layout_constraintTop_toBottomOf="@+id/txtTodoName" />
 
     <TextView
-        android:id="@+id/txtReadContent"
+        android:id="@+id/txtTodoContent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/lbl_todo_content"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/txtReadName"
-        app:layout_constraintStart_toStartOf="@+id/txtReadName"
-        app:layout_constraintTop_toBottomOf="@+id/txtReadNameCatch" />
+        app:layout_constraintEnd_toEndOf="@+id/txtTodoName"
+        app:layout_constraintStart_toStartOf="@+id/txtTodoName"
+        app:layout_constraintTop_toBottomOf="@+id/edtTodoName" />
 
-    <TextView
-        android:id="@+id/txtReadContentCatch"
+    <EditText
+        android:id="@+id/edtTodoContent"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:background="@android:color/background_light"
-        android:textColor="@android:color/black"
+        android:ems="10"
+        android:gravity="start"
+        android:inputType="textMultiLine"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/txtReadContent"
-        app:layout_constraintStart_toStartOf="@+id/txtReadContent"
-        app:layout_constraintTop_toBottomOf="@+id/txtReadContent" />
+        app:layout_constraintEnd_toEndOf="@+id/txtTodoContent"
+        app:layout_constraintStart_toStartOf="@+id/txtTodoContent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTodoContent" />
 
 </android.support.constraint.ConstraintLayout>

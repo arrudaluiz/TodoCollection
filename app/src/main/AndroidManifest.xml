@@ -12,18 +12,18 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ActAbout"
-            android:label="@string/title_activity_act_about"
-            android:parentActivityName=".ActMain"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
-            android:name=".ActReadTodo"
-            android:label="@string/title_activity_act_read_todo"
+            android:name=".ActHandleTodo"
+            android:label="@string/title_activity_act_create_todo"
             android:parentActivityName=".ActMain"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ActHandleTodo"
-            android:label="@string/title_activity_act_create_todo"
+            android:name=".ActAbout"
+            android:label="@string/title_activity_act_about"
+            android:parentActivityName=".ActMain"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ActReadTodo"
+            android:label="@string/title_activity_act_read_todo"
             android:parentActivityName=".ActMain"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

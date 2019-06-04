@@ -26,4 +26,6 @@
     <string name="lbl_email"><![CDATA[<luizarruda@alunos.utfpr.edu.br>]]></string>
     <string name="email_subject">I came from your To-Do Collection app!</string>
     <string name="mailto">mailto:luizarruda@alunos.utfpr.edu.br</string>
+    <string name="title_menu_edit">Edit</string>
+    <string name="title_menu_delete">Delete</string>
 </resources>
