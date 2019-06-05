@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">To-Do Collection</string>
+    <string name="app_name" translatable="false">To-Do Collection</string>
     <string name="title_activity_act_main">To-Do Collection</string>
     <string name="title_activity_act_handle_todo_new">"New "</string>
     <string name="title_activity_act_handle_todo_edit">"Edit "</string>
@@ -12,9 +12,9 @@
     <string name="title_alert">Alert</string>
     <string name="message_invalid_name">Invalid name!</string>
     <string name="message_empty_content">Empty content field!</string>
-    <string name="lbl_ok">OK</string>
-    <string name="lbl_null" />
-    <string name="obj_todo">Todo</string>
+    <string name="lbl_ok" translatable="false">OK</string>
+    <string name="lbl_null" translatable="false" />
+    <string name="obj_todo" translatable="false">Todo</string>
     <string name="card_delete">Delete</string>
     <string name="title_deleting">"Deleting "</string>
     <string name="msg_deleting">You are about to delete this item. Do you want to delete?</string>
@@ -23,10 +23,10 @@
     <string name="lbl_use">This application is a To-Do list collection to organize the user\'s routine and tasks.</string>
     <string name="lbl_built_on">Built on June 4, 2019</string>
     <string name="lbl_built_in">in Android Studio 3.3.2 by</string>
-    <string name="lbl_author">Luiz Alberto Teodoro de Arruda</string>
-    <string name="lbl_email"><![CDATA[<luizarruda@alunos.utfpr.edu.br>]]></string>
+    <string name="lbl_author" translatable="false">Luiz Alberto Teodoro de Arruda</string>
+    <string name="lbl_email" translatable="false"><![CDATA[<luizarruda@alunos.utfpr.edu.br>]]></string>
     <string name="email_subject">I came from your To-Do Collection app!</string>
-    <string name="mailto">mailto:luizarruda@alunos.utfpr.edu.br</string>
+    <string name="mailto" translatable="false">mailto:luizarruda@alunos.utfpr.edu.br</string>
     <string name="title_menu_edit">Edit</string>
     <string name="title_menu_delete">Delete</string>
     <string name="title_items_selected">" items selected"</string>

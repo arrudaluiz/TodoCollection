@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_act_main">Coleção de To-Do lists</string>
+    <string name="title_activity_act_handle_todo_new">"Nova "</string>
+    <string name="title_activity_act_handle_todo_edit">"Editar "</string>
+    <string name="title_activity_act_read_todo">Lista To-Do</string>
+    <string name="title_activity_act_about">Sobre o To-Do Collection</string>
+    <string name="lbl_todo_name">Nome</string>
+    <string name="lbl_todo_content">Conteúdo</string>
+    <string name="title_menu_save">Salvar</string>
+    <string name="title_menu_cancel">Cancelar</string>
+    <string name="title_alert">Alerta</string>
+    <string name="message_invalid_name">Nome inválido!</string>
+    <string name="message_empty_content">Campo de conteúdo vazio!</string>
+    <string name="card_delete">Excluir</string>
+    <string name="title_deleting">Excluindo</string>
+    <string name="msg_deleting">Você está prestes a excluir esse item. Quer mesmo excluí-lo?</string>
+    <string name="lbl_cancel">Cancelar</string>
+    <string name="lbl_about">Sobre</string>
+    <string name="lbl_use">Essa aplicação é uma coleção de To-Do lists para organizar a rotina e as tarefas do usuário.</string>
+    <string name="lbl_built_on">Criado em 4 de Junho de 2019</string>
+    <string name="lbl_built_in">no Android Studio 3.3.2 por</string>
+    <string name="email_subject">Eu vim do seu aplicativo To-Do Collection!</string>
+    <string name="title_menu_edit">Editar</string>
+    <string name="title_menu_delete">Excluir</string>
+    <string name="title_items_selected">Itens selecionados</string>
+</resources>

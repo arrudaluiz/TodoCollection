@@ -1,11 +1,13 @@
 package br.edu.utfpr.todocollection;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
@@ -53,8 +55,18 @@ public class ActMain extends AppCompatActivity {
                     return true;
 
                 case R.id.action_delete:
-                    todoList.remove(position);
-                    adapter.notifyItemRemoved(position);
+                    final int pos = position;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ActMain.this);
+                    builder.setTitle(R.string.title_deleting).setMessage(R.string.msg_deleting)
+                            .setPositiveButton(R.string.lbl_ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    todoList.remove(pos);
+                                    adapter.notifyItemRemoved(pos);
+                                }
+                            })
+                            .setNegativeButton(R.string.lbl_cancel, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {}
+                            }).create().show();
                     actionMode.finish();
                     return true;
 
