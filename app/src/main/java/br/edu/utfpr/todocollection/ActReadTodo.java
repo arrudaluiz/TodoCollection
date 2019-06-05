@@ -1,22 +1,14 @@
 package br.edu.utfpr.todocollection;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.Menu;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.support.v7.widget.Toolbar;
 
 public class ActReadTodo extends AppCompatActivity {
-    public static final int READ = 2;
-
-    private Toolbar toolbar;
-    private ActionBar ab;
-    private TextView txtReadNameCatch;
-    private TextView txtReadContentCatch;
-    private Intent intent;
 
     public static void readTodo(AppCompatActivity activity, Todo todo) {
         Intent intent = new Intent(activity, ActReadTodo.class);
@@ -28,48 +20,47 @@ public class ActReadTodo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_read_todo);
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ab = getSupportActionBar();
+        ActionBar ab = getSupportActionBar();
         if (ab != null) {
             ab.setDisplayHomeAsUpEnabled(true);
         }
 
-        intent = getIntent();
-        Todo todo = intent.getParcelableExtra(ActHandleTodo.TODO);
+        TextView txtReadNameCatch = findViewById(R.id.txtReadNameCatch);
+        TextView txtReadContentCatch = findViewById(R.id.txtReadContentCatch);
 
-        txtReadNameCatch = findViewById(R.id.txtReadNameCatch);
-        txtReadNameCatch.setText(todo.getName());
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
 
-        txtReadContentCatch = findViewById(R.id.txtReadContentCatch);
-        txtReadContentCatch.setText(todo.getContent());
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.context_menu_act_main, menu);
-        return true;
+        if (bundle != null) {
+            Todo todo = bundle.getParcelable(ActHandleTodo.TODO);
+            if (todo != null) {
+                txtReadNameCatch.setText(todo.getName());
+                txtReadContentCatch.setText(todo.getContent());
+            }
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_edit:
-//                ActHandleTodo.alterTodo();
-                finish();
+            case R.id.action_about:
+                ActAbout.showAbout(this);
                 return true;
 
             case android.R.id.home:
-                finish();
-                return true;
-
-            case R.id.action_delete:
-                // Call delete function
-                finish();
+                onBackPressed();
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

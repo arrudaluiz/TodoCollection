@@ -13,7 +13,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".ActHandleTodo"
-            android:label="@string/title_activity_act_create_todo"
+            android:label="@string/title_activity_act_read_todo"
             android:parentActivityName=".ActMain"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

@@ -15,7 +15,7 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     private OnItemClickListener listener;
 
     // Constructor
-    public MainAdapter(ArrayList<Todo> todoList) {
+    MainAdapter(ArrayList<Todo> todoList) {
         this.todoList = todoList;
     }
 
@@ -24,7 +24,7 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         boolean onItemLongClick(View cardView, int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 
@@ -36,15 +36,8 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         viewHolder.txtTodoName.setText(todoList.get(i).getName());
-        /*viewHolder.bttDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                todoList.remove(viewHolder.getAdapterPosition());
-                notifyItemRemoved(viewHolder.getAdapterPosition());
-            }
-        });*/
     }
 
     @Override
@@ -52,16 +45,14 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         return todoList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public CardView cardTodo;
-        public TextView txtTodoName;
-        //public ImageButton bttDelete;
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        CardView cardTodo;
+        TextView txtTodoName;
 
-        public ViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
+        ViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             cardTodo = itemView.findViewById(R.id.cardTodo);
             txtTodoName = itemView.findViewById(R.id.txtTodoName);
-            //bttDelete = itemView.findViewById(R.id.bttDelete);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

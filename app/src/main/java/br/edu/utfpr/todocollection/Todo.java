@@ -7,7 +7,7 @@ public class Todo implements Parcelable {
     private String name;
     private String content;
 
-    public Todo(String name, String content) {
+    Todo(String name, String content) {
         this.name = name;
         this.content = content;
     }
@@ -29,19 +29,19 @@ public class Todo implements Parcelable {
         }
     };
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
-    public String getContent() {
+    String getContent() {
         return content;
     }
 
-    public void setContent(String content) {
+    void setContent(String content) {
         this.content = content;
     }
 

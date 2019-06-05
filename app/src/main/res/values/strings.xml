@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">To-Do Collection</string>
     <string name="title_activity_act_main">To-Do Collection</string>
-    <string name="title_activity_act_create_todo">New To-Do List</string>
-    <string name="title_activity_act_read_todo">To-do Note</string>
+    <string name="title_activity_act_handle_todo_new">"New "</string>
+    <string name="title_activity_act_handle_todo_edit">"Edit "</string>
+    <string name="title_activity_act_read_todo">To-do List</string>
     <string name="title_activity_act_about">About To-Do Collection</string>
     <string name="lbl_todo_name">Name</string>
     <string name="lbl_todo_content">Content</string>
@@ -13,7 +14,7 @@
     <string name="message_empty_content">Empty content field!</string>
     <string name="lbl_ok">OK</string>
     <string name="lbl_null" />
-    <string name="obj_note">Note</string>
+    <string name="obj_todo">Todo</string>
     <string name="card_delete">Delete</string>
     <string name="title_deleting">"Deleting "</string>
     <string name="msg_deleting">You are about to delete this item. Do you want to delete?</string>

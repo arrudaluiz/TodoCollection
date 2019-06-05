@@ -15,22 +15,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class ActMain extends AppCompatActivity {
-    private Toolbar toolbar;
-    private Intent intent;
     private ArrayList<Todo> todoList;
-    private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
     private MainAdapter adapter;
     private FloatingActionButton fab;
 
     private ActionMode actionMode;
-    private ArrayList<View> cards;
-    private ArrayList<Integer> positions;
+    private View card;
+    private int position;
 
     private ActionMode.Callback callback = new ActionMode.Callback() {
         @Override
@@ -45,26 +40,21 @@ public class ActMain extends AppCompatActivity {
 
         @Override
         public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
-            Toast.makeText(getApplicationContext(),
-                    getString(R.string.lbl_ok),
-                    Toast.LENGTH_SHORT).show();
             return false;
         }
 
         @Override
         public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+            int position = ActMain.this.position;
             switch (menuItem.getItemId()) {
                 case R.id.action_edit:
-                    int position = positions.get(0);
                     ActHandleTodo.alterTodo(ActMain.this, todoList.get(position), position);
-
                     actionMode.finish();
                     return true;
 
                 case R.id.action_delete:
-                    for (int i : positions)
-                        todoList.remove(i);
-
+                    todoList.remove(position);
+                    adapter.notifyItemRemoved(position);
                     actionMode.finish();
                     return true;
 
@@ -79,11 +69,9 @@ public class ActMain extends AppCompatActivity {
 
         @Override
         public void onDestroyActionMode(ActionMode actionMode) {
-            for (View card : cards) {
-                card.setBackgroundColor(getResources().getColor(android.R.color.background_light));
-            }
-            cards.clear();
-
+            card.setBackgroundColor(getResources()
+                    .getColor(android.R.color.background_light));
+            card = null;
             fab.setEnabled(true);
             fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.utfpr_yellow)));
         }
@@ -91,8 +79,7 @@ public class ActMain extends AppCompatActivity {
 
     // Constructor
     public ActMain() {
-        cards = new ArrayList<>();
-        positions = new ArrayList<>();
+        card = null;
         todoList = new ArrayList<>();
         todoList.add(new Todo("Provas", "Matemática\nPortuguês\nInglês"));
         todoList.add(new Todo("Mercado", "Arroz\nFeijão\nQueijo"));
@@ -103,11 +90,11 @@ public class ActMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_main);
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         buildRecycleView();
-        registerForContextMenu(recyclerView);
+        //registerForContextMenu(recyclerView);
 
         fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -137,9 +124,9 @@ public class ActMain extends AppCompatActivity {
     }
 
     private void buildRecycleView() {
-        recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         adapter = new MainAdapter(todoList);
 
         recyclerView.setLayoutManager(layoutManager);
@@ -148,45 +135,35 @@ public class ActMain extends AppCompatActivity {
         adapter.setOnItemClickListener(new MainAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View viewCard, int position) {
-                if (cards.isEmpty()) {
+                if (card == null) {
                     ActReadTodo.readTodo(ActMain.this, todoList.get(position));
 
-                } else if (cards.remove(viewCard)) {
-                    viewCard.setBackgroundColor(getResources()
+                } else if (card != viewCard) {
+                    card.setBackgroundColor(getResources()
                             .getColor(android.R.color.background_light));
-                    positions.remove(Integer.valueOf(position));
-
-                    switch (cards.size()) {
-                        case 0:
-                            actionMode.finish();
-                            break;
-
-                        case 1:
-                            actionMode.getMenu().findItem(R.id.action_edit).setVisible(true);
-                    }
+                    viewCard.setBackgroundColor(getResources()
+                            .getColor(R.color.utfpr_grey));
+                    card = viewCard;
+                    ActMain.this.position = position;
 
                 } else {
-                    cards.add(viewCard);
-                    positions.add(position);
-                    viewCard.setBackgroundColor(getResources().getColor(R.color.utfpr_grey));
-                    actionMode.getMenu().findItem(R.id.action_edit).setVisible(false);
-                    actionMode.setTitle(getString(cards.size()) + getString(R.string.title_items_selected));
+                    viewCard.setBackgroundColor(getResources()
+                            .getColor(android.R.color.background_light));
+                    actionMode.finish();
                 }
             }
 
             @Override
             public boolean onItemLongClick(View viewCard, int position) {
-                if (!cards.isEmpty())
-                    actionMode.finish();
-
-                cards.add(viewCard);
-                positions.add(position);
-                viewCard.setBackgroundColor(getResources().getColor(R.color.utfpr_grey));
-                actionMode = startSupportActionMode(callback);
-                if (actionMode != null)
-                    actionMode.getMenu().findItem(R.id.action_edit).setVisible(true);
-
-                return true;
+                if (card == null) {
+                    viewCard.setBackgroundColor(getResources()
+                            .getColor(R.color.utfpr_grey));
+                    card = viewCard;
+                    ActMain.this.position = position;
+                    actionMode = startSupportActionMode(callback);
+                    return true;
+                }
+                return false;
             }
         });
     }
@@ -205,11 +182,13 @@ public class ActMain extends AppCompatActivity {
                 if (todo != null) {
                     if (requestCode == ActHandleTodo.CREATE) {
                         todoList.add(todo);
+                        adapter.notifyItemInserted(todoList.size()-1);
 
                     } else if (requestCode == ActHandleTodo.ALTER) {
                         int position = bundle.getInt(ActHandleTodo.POSITION);
                         todoList.get(position).setName(todo.getName());
                         todoList.get(position).setContent(todo.getContent());
+                        adapter.notifyItemChanged(position);
                     }
                 }
             }

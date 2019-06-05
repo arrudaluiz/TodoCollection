@@ -30,6 +30,7 @@
         android:background="@android:color/background_light"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textColorLink="@color/colorAccent"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="@+id/txtTodoName"
         app:layout_constraintStart_toStartOf="@+id/txtTodoName"

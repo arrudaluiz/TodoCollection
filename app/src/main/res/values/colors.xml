@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#CAD3D8</color>
     <color name="colorPrimaryDark">#373435</color>
-    <color name="colorAccent">#FFFFFF</color>
+    <color name="colorAccent">#FCCA29</color>
     <color name="utfpr_yellow">#FECB29</color>
     <color name="utfpr_black">#373435</color>
     <color name="utfpr_grey">#A8ABAD</color>

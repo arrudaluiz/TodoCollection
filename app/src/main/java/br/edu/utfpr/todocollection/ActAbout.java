@@ -10,8 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 public class ActAbout extends AppCompatActivity {
-    private Toolbar toolbar;
-    private ActionBar ab;
 
     public static void showAbout(AppCompatActivity activity) {
         Intent intent = new Intent(activity, ActAbout.class);
@@ -31,21 +29,29 @@ public class ActAbout extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_about);
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+        ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                onBackPressed();
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

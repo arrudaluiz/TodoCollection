@@ -18,10 +18,10 @@ public class ActHandleTodo extends AppCompatActivity {
     public static final int CREATE = 0;
     public static final int ALTER = 1;
 
-    private Toolbar toolbar;
-    private ActionBar ab;
     private EditText edtTodoName;
     private EditText edtTodoContent;
+    private int position;
+    private int mode;
 
     public static void createTodo(AppCompatActivity activity) {
         Intent intent = new Intent(activity, ActHandleTodo.class);
@@ -41,14 +41,38 @@ public class ActHandleTodo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_handle_todo);
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ab = getSupportActionBar();
+        ActionBar ab = getSupportActionBar();
         if (ab != null)
             ab.setDisplayHomeAsUpEnabled(true);
 
         edtTodoName = findViewById(R.id.edtTodoName);
         edtTodoContent = findViewById(R.id.edtTodoContent);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+
+        if (bundle != null) {
+            if (bundle.getInt(MODE) == CREATE) {
+                mode = CREATE;
+                setTitle(getString(R.string.title_activity_act_handle_todo_new) +
+                         getString(R.string.title_activity_act_read_todo));
+            }
+
+            if (bundle.getInt(MODE) == ALTER) {
+                mode = ALTER;
+                Todo todo = bundle.getParcelable(TODO);
+                position = bundle.getInt(POSITION);
+                setTitle(getString(R.string.title_activity_act_handle_todo_edit) +
+                         getString(R.string.title_activity_act_read_todo));
+
+                if (todo != null) {
+                    edtTodoName.setText(todo.getName());
+                    edtTodoContent.setText(todo.getContent());
+                }
+            }
+        }
     }
 
     @Override
@@ -61,20 +85,25 @@ public class ActHandleTodo extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
-                if (validateFields()) {
-                    sendNewTodo();
-                    finish();
-                }
+                if (validateFields())
+                    respondMode();
                 return true;
 
             case android.R.id.home:
             case R.id.action_cancel:
-                finish();
+                onBackPressed();
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        setResult(Activity.RESULT_CANCELED);
+        finish();
     }
 
     private boolean isEmpty(String str) {
@@ -110,19 +139,36 @@ public class ActHandleTodo extends AppCompatActivity {
         return true;
     }
 
+    public void respondMode() {
+        switch (mode) {
+            case CREATE:
+                sendNewTodo();
+                break;
+
+            case ALTER:
+                sendEditedTodo();
+                break;
+
+            default:
+                setResult(Activity.RESULT_CANCELED);
+        }
+        finish();
+    }
+
     public void sendNewTodo() {
         Todo todo = new Todo(edtTodoName.getText().toString(), edtTodoContent.getText().toString());
         Intent intent = new Intent();
+        intent.putExtra(MODE, CREATE);
         intent.putExtra(TODO, todo);
         setResult(Activity.RESULT_OK, intent);
     }
 
-    public void sendChangedTodo() {
-        
-    }
-
-    public void cancel() {
-        setResult(Activity.RESULT_CANCELED);
-        finish();
+    public void sendEditedTodo() {
+        Todo todo = new Todo(edtTodoName.getText().toString(), edtTodoContent.getText().toString());
+        Intent intent = new Intent();
+        intent.putExtra(MODE, ALTER);
+        intent.putExtra(TODO, todo);
+        intent.putExtra(POSITION, position);
+        setResult(Activity.RESULT_OK, intent);
     }
 }
