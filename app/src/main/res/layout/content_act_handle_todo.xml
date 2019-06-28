@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/utfpr_grey"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="br.edu.utfpr.todocollection.ActHandleTodo"
+    tools:context="br.edu.utfpr.todocollection.view.ActHandleTodo"
     tools:showIn="@layout/act_handle_todo">
 
     <TextView

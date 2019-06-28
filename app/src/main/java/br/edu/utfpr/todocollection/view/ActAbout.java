@@ -1,4 +1,4 @@
-package br.edu.utfpr.todocollection;
+package br.edu.utfpr.todocollection.view;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+
+import br.edu.utfpr.todocollection.R;
 
 public class ActAbout extends AppCompatActivity {
 

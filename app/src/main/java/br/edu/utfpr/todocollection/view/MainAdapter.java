@@ -1,4 +1,4 @@
-package br.edu.utfpr.todocollection;
+package br.edu.utfpr.todocollection.view;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import br.edu.utfpr.todocollection.R;
+import br.edu.utfpr.todocollection.model.Todo;
 
 class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     private ArrayList<Todo> todoList;
@@ -59,6 +62,7 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 public void onClick(View v) {
                     if (listener != null) {
                         int position = getAdapterPosition();
+
                         if (position != RecyclerView.NO_POSITION) {
                             listener.onItemClick(cardTodo, position);
                         }
@@ -71,6 +75,7 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 public boolean onLongClick(View v) {
                     if (listener != null) {
                         int position = getAdapterPosition();
+
                         if (position != RecyclerView.NO_POSITION) {
                             return listener.onItemLongClick(cardTodo, position);
                         }

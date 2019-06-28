@@ -1,7 +1,8 @@
-package br.edu.utfpr.todocollection;
+package br.edu.utfpr.todocollection.view;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -11,17 +12,37 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import org.jetbrains.annotations.NotNull;
+
+import br.edu.utfpr.todocollection.R;
+import br.edu.utfpr.todocollection.dao.TodoDatabase;
+import br.edu.utfpr.todocollection.model.Item;
+import br.edu.utfpr.todocollection.model.Todo;
+
 public class ActHandleTodo extends AppCompatActivity {
-    public static final String TODO = "TODO";
     public static final String MODE = "MODE";
+    public static final String ID = "ID";
     public static final String POSITION = "POSITION";
     public static final int CREATE = 0;
     public static final int ALTER = 1;
 
+    private int mode;
+    private int id;
+    private int position;
+    private Todo todo;
+    private Item item;
     private EditText edtTodoName;
     private EditText edtTodoContent;
-    private int position;
-    private int mode;
+
+    public ActHandleTodo() {
+        mode = -1;
+        id = -1;
+        position = -1;
+        todo = null;
+        item = null;
+        edtTodoName = null;
+        edtTodoContent = null;
+    }
 
     public static void createTodo(AppCompatActivity activity) {
         Intent intent = new Intent(activity, ActHandleTodo.class);
@@ -29,10 +50,10 @@ public class ActHandleTodo extends AppCompatActivity {
         activity.startActivityForResult(intent, CREATE);
     }
 
-    public static void alterTodo(AppCompatActivity activity, Todo todo, int position) {
+    public static void alterTodo(AppCompatActivity activity, int position, int id) {
         Intent intent = new Intent(activity, ActHandleTodo.class);
         intent.putExtra(MODE, ALTER);
-        intent.putExtra(TODO, todo);
+        intent.putExtra(ID, id);
         intent.putExtra(POSITION, position);
         activity.startActivityForResult(intent, ALTER);
     }
@@ -55,22 +76,35 @@ public class ActHandleTodo extends AppCompatActivity {
 
         if (bundle != null) {
             if (bundle.getInt(MODE) == CREATE) {
+                todo = new Todo("");
+                item = new Item(-1, "");
                 mode = CREATE;
                 setTitle(getString(R.string.title_activity_act_handle_todo_new) +
                          getString(R.string.title_activity_act_read_todo));
-            }
 
-            if (bundle.getInt(MODE) == ALTER) {
+            } else if (bundle.getInt(MODE) == ALTER) {
                 mode = ALTER;
-                Todo todo = bundle.getParcelable(TODO);
                 position = bundle.getInt(POSITION);
+                id = bundle.getInt(ID);
                 setTitle(getString(R.string.title_activity_act_handle_todo_edit) +
                          getString(R.string.title_activity_act_read_todo));
 
-                if (todo != null) {
-                    edtTodoName.setText(todo.getName());
-                    edtTodoContent.setText(todo.getContent());
-                }
+                AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        TodoDatabase db = TodoDatabase.getDatabase(ActHandleTodo.this);
+                        todo = db.todoDAO().queryForId(id);
+                        item = db.itemDAO().queryForTodoId(id);
+
+                        ActHandleTodo.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                edtTodoName.setText(todo.getName());
+                                edtTodoContent.setText(item.getContent());
+                            }
+                        });
+                    }
+                });
             }
         }
     }
@@ -106,7 +140,7 @@ public class ActHandleTodo extends AppCompatActivity {
         finish();
     }
 
-    private boolean isEmpty(String str) {
+    private boolean isEmpty(@NotNull String str) {
         return str.trim().isEmpty();
     }
 
@@ -140,34 +174,48 @@ public class ActHandleTodo extends AppCompatActivity {
     }
 
     public void respondMode() {
-        switch (mode) {
-            case CREATE:
-                sendNewTodo();
-                break;
+        todo.setName(edtTodoName.getText().toString());
+        item.setContent(edtTodoContent.getText().toString());
 
-            case ALTER:
-                sendEditedTodo();
-                break;
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                switch (mode) {
+                    case CREATE:
+                        sendNewTodo();
+                        break;
 
-            default:
-                setResult(Activity.RESULT_CANCELED);
-        }
-        finish();
+                    case ALTER:
+                        sendEditedTodo();
+                        break;
+
+                    default:
+                        setResult(Activity.RESULT_CANCELED);
+                }
+                finish();
+            }
+        });
     }
 
     public void sendNewTodo() {
-        Todo todo = new Todo(edtTodoName.getText().toString(), edtTodoContent.getText().toString());
+        TodoDatabase db = TodoDatabase.getDatabase(ActHandleTodo.this);
+        item.setTodoId((int) db.todoDAO().insert(todo));
+        int todoId = (int) db.itemDAO().insert(item);
+
         Intent intent = new Intent();
         intent.putExtra(MODE, CREATE);
-        intent.putExtra(TODO, todo);
+        intent.putExtra(ID, todoId);
         setResult(Activity.RESULT_OK, intent);
     }
 
     public void sendEditedTodo() {
-        Todo todo = new Todo(edtTodoName.getText().toString(), edtTodoContent.getText().toString());
+        TodoDatabase db = TodoDatabase.getDatabase(ActHandleTodo.this);
+        db.todoDAO().update(todo);
+        db.itemDAO().update(item);
+
         Intent intent = new Intent();
         intent.putExtra(MODE, ALTER);
-        intent.putExtra(TODO, todo);
+        intent.putExtra(ID, id);
         intent.putExtra(POSITION, position);
         setResult(Activity.RESULT_OK, intent);
     }

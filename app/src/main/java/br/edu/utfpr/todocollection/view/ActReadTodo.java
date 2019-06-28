@@ -1,6 +1,7 @@
-package br.edu.utfpr.todocollection;
+package br.edu.utfpr.todocollection.view;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -8,11 +9,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class ActReadTodo extends AppCompatActivity {
+import br.edu.utfpr.todocollection.R;
+import br.edu.utfpr.todocollection.dao.TodoDatabase;
+import br.edu.utfpr.todocollection.model.Item;
+import br.edu.utfpr.todocollection.model.Todo;
 
-    public static void readTodo(AppCompatActivity activity, Todo todo) {
+public class ActReadTodo extends AppCompatActivity {
+    private int id;
+
+    public static void readTodo(AppCompatActivity activity, int id) {
         Intent intent = new Intent(activity, ActReadTodo.class);
-        intent.putExtra(ActHandleTodo.TODO, todo);
+        intent.putExtra(ActHandleTodo.ID, id);
         activity.startActivity(intent);
     }
 
@@ -27,18 +34,31 @@ public class ActReadTodo extends AppCompatActivity {
             ab.setDisplayHomeAsUpEnabled(true);
         }
 
-        TextView txtReadNameCatch = findViewById(R.id.txtReadNameCatch);
-        TextView txtReadContentCatch = findViewById(R.id.txtReadContentCatch);
+        final TextView txtReadNameCatch = findViewById(R.id.txtReadNameCatch);
+        final TextView txtReadContentCatch = findViewById(R.id.txtReadContentCatch);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
         if (bundle != null) {
-            Todo todo = bundle.getParcelable(ActHandleTodo.TODO);
-            if (todo != null) {
-                txtReadNameCatch.setText(todo.getName());
-                txtReadContentCatch.setText(todo.getContent());
-            }
+            id = bundle.getInt(ActHandleTodo.ID);
+
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    TodoDatabase db = TodoDatabase.getDatabase(ActReadTodo.this);
+                    final Todo todo = db.todoDAO().queryForId(id);
+                    final Item item = db.itemDAO().queryForTodoId(id);
+
+                    ActReadTodo.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            txtReadNameCatch.setText(todo.getName());
+                            txtReadContentCatch.setText(item.getContent());
+                        }
+                    });
+                }
+            });
         }
     }
 
