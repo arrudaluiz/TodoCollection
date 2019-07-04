@@ -31,8 +31,8 @@ public abstract class TodoDatabase extends RoomDatabase {
         return instance;
     }
 
-    public final void destroy() {
+    /*public final void destroy() {
         if(instance != null)
             instance.close();
-    }
+    }*/
 }

@@ -4,59 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/utfpr_grey"
+    android:background="@color/colorPrimary"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="br.edu.utfpr.todocollection.view.ActReadTodo"
     tools:showIn="@layout/act_read_todo">
 
     <TextView
-        android:id="@+id/txtReadName"
+        android:id="@+id/txtName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/lbl_todo_name"
-        android:textStyle="bold"
+        android:layout_margin="4dp"
+        android:background="@android:color/background_light"
+        android:gravity="start|center_vertical"
+        android:padding="15sp"
+        android:textColor="@android:color/black"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtReadNameCatch"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
         android:layout_marginTop="8dp"
-        android:background="@android:color/background_light"
-        android:textColor="@android:color/black"
-        android:textSize="28sp"
-        app:layout_constraintEnd_toEndOf="@+id/txtReadName"
-        app:layout_constraintStart_toStartOf="@+id/txtReadName"
-        app:layout_constraintTop_toBottomOf="@+id/txtReadName" />
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="@+id/txtName"
+        app:layout_constraintStart_toStartOf="@+id/txtName"
+        app:layout_constraintTop_toBottomOf="@+id/txtName" />
 
-    <TextView
-        android:id="@+id/txtReadContent"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/lbl_todo_content"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/txtReadName"
-        app:layout_constraintStart_toStartOf="@+id/txtReadName"
-        app:layout_constraintTop_toBottomOf="@+id/txtReadNameCatch" />
-
-    <TextView
-        android:id="@+id/txtReadContentCatch"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/readRecycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
-        android:background="@android:color/background_light"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/txtReadContent"
-        app:layout_constraintStart_toStartOf="@+id/txtReadContent"
-        app:layout_constraintTop_toBottomOf="@+id/txtReadContent" />
+        app:layout_constraintEnd_toEndOf="@+id/txtName"
+        app:layout_constraintStart_toStartOf="@+id/txtName"
+        app:layout_constraintTop_toBottomOf="@+id/divider2"
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>

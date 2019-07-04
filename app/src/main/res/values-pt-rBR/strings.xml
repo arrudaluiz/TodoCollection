@@ -9,9 +9,10 @@
     <string name="lbl_todo_content">Conteúdo</string>
     <string name="title_menu_save">Salvar</string>
     <string name="title_menu_cancel">Cancelar</string>
-    <string name="title_alert">Alerta</string>
+    <string name="title_impossible_to_save">Impossível salvar!</string>
     <string name="message_invalid_name">Nome inválido!</string>
-    <string name="message_empty_content">Campo de conteúdo vazio!</string>
+    <string name="message_empty_fields">Campos vazios não foram salvos.</string>
+    <string name="message_empty_list">A lista está vazia!</string>
     <string name="card_delete">Excluir</string>
     <string name="title_deleting">Excluindo</string>
     <string name="msg_deleting">Você está prestes a excluir esse item. Quer mesmo excluí-lo?</string>

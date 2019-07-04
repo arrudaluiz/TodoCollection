@@ -40,7 +40,7 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.txtTodoName.setText(todoList.get(i).getName());
+        viewHolder.txtTodoName.setText(todoList.get(viewHolder.getAdapterPosition()).getName());
     }
 
     @Override

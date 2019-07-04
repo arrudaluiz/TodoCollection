@@ -9,9 +9,10 @@
     <string name="lbl_todo_content">Content</string>
     <string name="title_menu_save">Save</string>
     <string name="title_menu_cancel">Cancel</string>
-    <string name="title_alert">Alert</string>
+    <string name="title_impossible_to_save">Impossible to save!</string>
     <string name="message_invalid_name">Invalid name!</string>
-    <string name="message_empty_content">Empty content field!</string>
+    <string name="message_empty_fields">Empty fields wasn\'t saved.</string>
+    <string name="message_empty_list">The list is empty!</string>
     <string name="lbl_ok" translatable="false">OK</string>
     <string name="lbl_null" translatable="false" />
     <string name="obj_todo" translatable="false">Todo</string>

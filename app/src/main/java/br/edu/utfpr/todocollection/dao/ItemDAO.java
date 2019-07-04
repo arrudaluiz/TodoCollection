@@ -6,6 +6,8 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
+import java.util.List;
+
 import br.edu.utfpr.todocollection.model.Item;
 
 @Dao
@@ -20,6 +22,5 @@ public interface ItemDAO {
     void update(Item item);
 
     @Query("SELECT * FROM item WHERE todoId = :todoId ORDER BY id ASC")
-    Item queryForTodoId(long todoId);
-    //List<Item> queryForTodoId(long todoId);
+    List<Item> queryForTodoId(long todoId);
 }

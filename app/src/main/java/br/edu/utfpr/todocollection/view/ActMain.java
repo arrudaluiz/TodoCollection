@@ -121,7 +121,7 @@ public class ActMain extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        buildRecycleView();
+        buildMainRecycler();
 
         fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -150,17 +150,18 @@ public class ActMain extends AppCompatActivity {
         }
     }
 
-    private void buildRecycleView() {
-        final RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
+    private void buildMainRecycler() {
+        final RecyclerView mainRecycler = findViewById(R.id.mainRecycler);
+        mainRecycler.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+        mainRecycler.setLayoutManager(layoutManager);
+
         /*
-         * Setting up an empty Adapter to RecyclerView to avoid error
-         * "E/RecyclerView: No adapter attached; skipping layout"
+         * Setting up an empty Adapter to RecyclerView to avoid
+         * "E/RecyclerView: No adapter attached; skipping layout" error.
          */
         adapter = new MainAdapter(new ArrayList<Todo>());
-        recyclerView.setAdapter(adapter);
+        mainRecycler.setAdapter(adapter);
 
         AsyncTask.execute(new Runnable() {
             @Override
@@ -172,7 +173,7 @@ public class ActMain extends AppCompatActivity {
                     @Override
                     public void run() {
                         adapter = new MainAdapter(todoList);
-                        recyclerView.setAdapter(adapter);
+                        mainRecycler.setAdapter(adapter);
 
                         adapter.setOnItemClickListener(new MainAdapter.OnItemClickListener() {
                             @Override

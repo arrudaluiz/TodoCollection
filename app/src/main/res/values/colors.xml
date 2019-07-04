@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#CAD3D8</color>
+    <color name="colorPrimary">#FAFAFA</color>
     <color name="colorPrimaryDark">#373435</color>
     <color name="colorAccent">#FCCA29</color>
     <color name="utfpr_yellow">#FECB29</color>

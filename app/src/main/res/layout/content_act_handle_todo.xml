@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/utfpr_grey"
+    android:background="@color/colorPrimary"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="br.edu.utfpr.todocollection.view.ActHandleTodo"
     tools:showIn="@layout/act_handle_todo">
@@ -13,11 +13,14 @@
         android:id="@+id/txtTodoName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:paddingStart="12sp"
+        android:paddingEnd="12sp"
         android:text="@string/lbl_todo_name"
-        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,41 +29,71 @@
         android:id="@+id/edtTodoName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="12dp"
         android:background="@android:color/background_light"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:hint="@string/lbl_todo_name"
+        android:inputType="text"
+        android:padding="15sp"
+        android:textColor="@android:color/black"
         android:textColorLink="@color/colorAccent"
-        android:textSize="28sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="@+id/txtTodoName"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/txtTodoName"
         app:layout_constraintTop_toBottomOf="@+id/txtTodoName" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="@+id/txtTodoName"
+        app:layout_constraintStart_toStartOf="@+id/txtTodoName"
+        app:layout_constraintTop_toBottomOf="@+id/edtTodoName" />
 
     <TextView
         android:id="@+id/txtTodoContent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/lbl_todo_content"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/txtTodoName"
-        app:layout_constraintStart_toStartOf="@+id/txtTodoName"
-        app:layout_constraintTop_toBottomOf="@+id/edtTodoName" />
-
-    <EditText
-        android:id="@+id/edtTodoContent"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
-        android:background="@android:color/background_light"
-        android:ems="10"
-        android:gravity="start"
-        android:inputType="textMultiLine"
-        android:textSize="18sp"
+        android:gravity="center_vertical"
+        android:paddingStart="12sp"
+        android:paddingEnd="12sp"
+        android:text="@string/lbl_todo_content"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/bttItemAdd"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txtTodoName"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+    <ImageButton
+        android:id="@+id/bttItemAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="12dp"
+        android:adjustViewBounds="true"
+        android:background="@color/colorPrimary"
+        android:contentDescription="@string/title_menu_delete"
+        android:elevation="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txtTodoContent"
+        app:layout_constraintEnd_toEndOf="@+id/txtTodoName"
+        app:layout_constraintTop_toTopOf="@+id/txtTodoContent"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/itemRecycler"
+        android:layout_width="0dp"
+        android:layout_height="433dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/txtTodoContent"
-        app:layout_constraintStart_toStartOf="@+id/txtTodoContent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTodoContent" />
+        app:layout_constraintEnd_toEndOf="@+id/txtTodoName"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txtTodoName"
+        app:layout_constraintTop_toBottomOf="@+id/txtTodoContent"
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>
